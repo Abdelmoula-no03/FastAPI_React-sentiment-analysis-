@@ -1,0 +1,33 @@
+version : "3.8"
+
+services:
+  backend:
+    container_name: FastApi
+    restart : unless-stopped
+    image: app-ipa:1.0.0
+    build: 
+      context: backend
+      dockerfile: Dockerfile
+    ports:  
+      - 8000:8000
+    networks:
+      - shared-networks  
+
+  frontend:
+    container_name: react-ui
+    restart : unless-stopped
+    image: app-frontend:1.0.0
+    build: 
+      context: frontend
+      dockerfile: Dockerfile
+    ports:  
+      - 3000:3000
+    networks:
+      - shared-networks
+    depends_on: 
+      - backend    
+
+
+networks:
+  shared-networks:
+
